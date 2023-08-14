@@ -1,3 +1,4 @@
+from models.quiz_entities import Quiz
 from models.user_credentials import UserCredential
 from models.user_entities import User, Admin, Student
 from threading import Lock
@@ -25,26 +26,47 @@ class DatabaseMeta(type):
 # Singleton class design pattern
 class Database(metaclass=DatabaseMeta):
 
-    people = {}
+    users = dict()
+    quizzes = dict()
 
     @classmethod
     def add_user(cls, user_name, user_password, user_role):
         user_credential = UserCredential(user_name, user_password, user_role)
         if user_role == UserCredential.ROLES["admin"]:
-            cls.people[user_name] = Admin(user_credential)
+            cls.users[user_name] = Admin(user_credential)
         elif user_role == UserCredential.ROLES["student"]:
-            cls.people[user_name] = Student(user_credential)
-        return cls.people[user_name]
+            cls.users[user_name] = Student(user_credential)
+        return cls.users[user_name]
 
     @classmethod
     def fetch_user(cls, user_name, user_password) -> User:
-        if user_name not in cls.people:
+        if user_name not in cls.users:
             return None
-        user = cls.people[user_name]
+        user = cls.users[user_name]
         user_credentials = user.get_credentials()
 
         if UserCredential.authenticate(user_password, user_credentials.get_password_hash(), user_credentials.get_password_salt()):
             return user
 
-    def __init__(self, value: str) -> None:
-        self.value = value
+    @classmethod
+    def add_quiz(cls, quiz_name, quiz_subject, quiz_questions) -> Quiz:
+        quiz_id = len(cls.quizzes)
+        cls.quizzes[quiz_id] = Quiz(quiz_id, quiz_name, quiz_subject, quiz_questions)
+        return cls.quizzes[quiz_id]
+
+    @classmethod
+    def fetch_quiz(cls, quiz_id) -> Quiz:
+        if quiz_id in cls.quizzes:
+            return cls.quizzes[quiz_id]
+        else:
+            return None
+
+    @classmethod
+    def fetch_all_quizzes(cls) -> {}:
+        return cls.quizzes
+
+    @classmethod
+    def save(cls):
+        pass # todo
+
+
