@@ -1,0 +1,14 @@
+{
+  "users": {
+    "ahmadmtera": {
+      "user_credentials": {
+        "username": "ahmadmtera",
+        "password_hash": "b'$2b$12$VfGWmmbQ/a6TGcN.gl09ceBvK5jOgKLkjvRif5i98fe7YaxnX3B.u'",
+        "password_salt": "b'$2b$12$VfGWmmbQ/a6TGcN.gl09ce'",
+        "role": 0,
+        "date_time_added": "14/08/2023 18:46:37"
+      }
+    }
+  },
+  "quizzes": {}
+}
