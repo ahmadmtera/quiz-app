@@ -1,16 +1,16 @@
-from models.quiz_entities import QuizQuestion
-from models.user_credentials import UserCredential
-from database import Database
+from security.authentication import Authenticator
+from models.database import Database
 from datetime import datetime
-from models.user_entities import User
 
 
 def print_welcome_prompt():
+    print("-------------------------------------")
     print("Welcome to this Quiz Program Portal.")
     print("Today's date & time is: " + datetime.now().strftime("%d/%m/%Y") + " & " + datetime.now().strftime("%H:%M:%S"))
+    print("--------------------------------------------------------------------------")
 
 
-def authenticate(database) -> User:
+def authenticate(database):
     current_user = None
     while True:
         print("Available roles: \"student\", \"admin\", or \"quit\" to quit")
@@ -45,8 +45,8 @@ def authenticate(database) -> User:
                         user_password = input("* Enter password: ")
                         if len(user_password) > 0:
                             break
-                    current_user = database.add_user(user_name, user_password, UserCredential.ROLES["admin"])
-                    print("Registered successfully. Make sure you remember your credentials in order to login later.")
+                    current_user = database.add_user(user_name, user_password, Authenticator.ROLES["admin"])
+                    print("Registered successfully.")
                     return current_user
                 elif option.lower() == "login":
                     attempts = 3
@@ -57,7 +57,7 @@ def authenticate(database) -> User:
                             break
                     while True:
                         user_password = input("* Enter password: ")
-                        if len(user_password) < 0:
+                        if len(user_password) == 0:
                             continue
                         else:
                             current_user = database.fetch_user(user_name, user_password)
@@ -69,9 +69,9 @@ def authenticate(database) -> User:
                                 continue
                             else:
                                 user_authenticated = True
-                    if user_authenticated:
-                        print("Logged in successfully...")
-                        return current_user
+                        if user_authenticated:
+                            print("Logged in successfully.")
+                            return current_user
                 else:
                     print("Invalid option (" + role + "). Tip: Type \"quit\" to exit.")
         elif role.lower() == "student":
@@ -88,8 +88,8 @@ def authenticate(database) -> User:
                         user_password = input("* Enter password: ")
                         if len(user_password) > 0:
                             break
-                    current_user = database.add_user(user_name, user_password, UserCredential.ROLES["student"])
-                    print("Registered successfully. Make sure you remember your credentials in order to login later.")
+                    current_user = database.add_user(user_name, user_password, Authenticator.ROLES["student"])
+                    print("Registered successfully.")
                     return current_user
                 elif option.lower() == "login":
                     attempts = 3
@@ -100,7 +100,7 @@ def authenticate(database) -> User:
                             break
                     while True:
                         user_password = input("* Enter password: ")
-                        if len(user_password) < 0:
+                        if len(user_password) == 0:
                             continue
                         else:
                             current_user = database.fetch_user(user_name, user_password)
@@ -113,33 +113,34 @@ def authenticate(database) -> User:
                             else:
                                 user_authenticated = True
                     if user_authenticated:
-                        print("Logged in successfully...")
+                        print("Logged in successfully.")
                         return current_user
                 else:
                     print("Invalid option (" + role + "). Tip: Type \"quit\" to exit.")
         elif role.lower() == "quit":
-            print("Quitting...")
+            print("No changes made. Quitting...")
             exit(0)
         else:
             print("Invalid role (" + role + "). Tip: Type \"quit\" to exit.")
 
 
-def print_quizzes_list():
-    quizzes = Database.fetch_all_quizzes()
+def print_quizzes_list(database):
+    quizzes = database.fetch_all_quizzes()
     print("------------------------------------------------------------")
     if len(quizzes) == 0:
         print("No quizzes exist in the database. Add a quiz to get started.")
         print("------------------------------------------------------------")
         return
     print("Viewing all quizzes:-")
-    for quiz_index, quiz_object in quizzes.items():
-        print("- Quiz name: " + quiz_object.get_name(), ", ID: " + str(quiz_object.get_id()))
+    print("---------------------")
+    for quiz in quizzes.values():
+        print("- Quiz name: " + quiz["name"], ", ID: " + str(quiz["id"]) + ", Creator: " + quiz["owner_name"])
         question_number = 1
-        for question in quiz_object.get_questions():
-            print("Question(" + str(question_number) + "): " + question.get_title())
+        for question in quiz["questions"]:
+            print("Question(" + str(question_number) + "): " + question["title"])
             question_number += 1
             choice_number = 1
-            for choice in question.get_choices():
+            for choice in question["choices"]:
                 print(str(choice_number) + ") " + choice)
                 choice_number += 1
             print()
@@ -159,7 +160,7 @@ def print_add_quiz_form(database, current_user):
             if len(quiz_subject) > 0:
                 break
         question_number = 1
-        quiz_questions = {}
+        quiz_questions = []
         while True:
             print("Type \"add\" to add a question to quiz (" + quiz_name + "), \"save\" to save the quiz, or \"discard\" to discard the form:-")
             option = input("* Option: ")
@@ -170,28 +171,35 @@ def print_add_quiz_form(database, current_user):
                     if len(quiz_question_title) > 0:
                         break
                 choice_number = 1
-                print("* Question(" + str(question_number) + ") choices (type \"done\" to finish the question):-")
+                print("* Question(" + str(question_number) + ") choices:-")
+                print("  Note: When done adding choices, type \"correct\" to enter the correct answer's # and finish the question.")
                 question_number += 1
                 while True:
                     choice = input("Choice (" + str(choice_number) + "): ")
                     if len(choice) == 0:
                         continue
-                    elif choice == "done":
+                    elif choice == "correct":
                         if choice_number < 3:
-                            print("Question must have at least two choices. Please add at least two choices before entering \"done\"")
+                            print("Please add at least two choices before entering \"correct\"")
                             continue
                         else:
-                            quiz_questions[quiz_question_title] = (QuizQuestion(quiz_question_title, quiz_question_choices))
-                            break
+                            while True:
+                                correct_choice = input("* Correct choice #: ")
+                                if len(choice) == 0:
+                                    continue
+                                else:
+                                    quiz_questions.append({"title": quiz_question_title, "choices": quiz_question_choices, "correct_choice": correct_choice})
+                                    break
+                        break
                     else:
                         quiz_question_choices.append(choice)
-                    choice_number += 1
+                        choice_number += 1
             elif option == "save":
                 if question_number < 2:
                     print("Quiz must have at least one question. Please add at least one question before entering \"save\"")
                     continue
                 else:
-                    database.add_quiz(quiz_name, quiz_subject, quiz_questions)
+                    database.add_quiz(quiz_name, quiz_subject, current_user["auth_cred"]["name"], quiz_questions)
                     print("------------------------------------------------------------------------------------")
                     return
             elif option == "discard":
@@ -203,14 +211,14 @@ def print_add_quiz_form(database, current_user):
 
 def enter_admin_portal(database, current_user):
     print("-----------------------------------------------------------------------------------------")
-    print("Welcome to the Admin portal, " + current_user.user_credentials.get_username() + '.')
+    print("Welcome to the Admin portal, " + current_user["auth_cred"]["name"] + '.')
     print("-----------------------------------------")
     while True:
         print("You are in the Main Menu.")
         print("Available options: \"view\" to list all quizzes, \"add\" to create a quiz, or \"logout\" to save and exit:-")
         option = input("* Enter option: ")
         if option == "view":
-            print_quizzes_list()
+            print_quizzes_list(database)
         elif option == "add":
             print_add_quiz_form(database, current_user)
         elif option == "logout":
@@ -239,9 +247,9 @@ def main():
     database = create_database_instance()
     database.load_from_file()
     current_user = authenticate(database)
-    if current_user.get_credentials().get_role() == UserCredential.ROLES["admin"]:
+    if current_user["auth_cred"]["role"] == Authenticator.ROLES["admin"]:
         enter_admin_portal(database, current_user)
-    elif current_user.get_credentials().get_role() == UserCredential.ROLES["student"]:
+    elif current_user["auth_cred"]["role"] == Authenticator.ROLES["student"]:
         enter_student_portal(current_user)
 
 
