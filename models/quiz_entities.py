@@ -4,7 +4,7 @@ from utilities import InputVerificationUtils
 
 
 class Quiz:
-    def __init__(self, quiz_id, quiz_name, quiz_subject, quiz_questions: []):
+    def __init__(self, quiz_id, quiz_name, quiz_subject, quiz_questions):
         if not InputVerificationUtils.isinteger(quiz_id):
             raise ValueError("Age must be an integer in __self__ method of the Quiz class.")
         self.quiz_id = quiz_id
@@ -12,6 +12,9 @@ class Quiz:
         self.quiz_subject = quiz_subject
         self.quiz_questions = quiz_questions
         self.date_time_added = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+    def __dict__(self):
+        return {"quiz_id": self.quiz_id, "quiz_name": self.quiz_name, "quiz_subject": self.quiz_subject, "quiz_questions": {k: v.__dict__() for (k, v) in self.quiz_questions.items()}, "date_time_added": self.date_time_added}
 
     def get_id(self):
         return self.quiz_id
@@ -30,12 +33,19 @@ class Quiz:
 
 
 class QuizQuestion:
-    def __init__(self, title, choices: []):
+    def __init__(self, title, choices: [], correct_choice):
         self.title = title
         self.choices: [] = choices
+        self.correct_choice = correct_choice
+
+    def __dict__(self):
+        return {"title": self.title, "choices": self.choices, "correct_choice": self.correct_choice}
 
     def get_title(self):
         return self.title
 
     def get_choices(self):
         return self.choices
+
+    def get_correct_choice(self):
+        return self.correct_choice
