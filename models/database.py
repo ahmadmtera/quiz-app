@@ -31,7 +31,6 @@ class Database:
             input_dictionary = json.load(input_file)
             self.userObject = User.instance().set_users(input_dictionary["users"])
             self.quizObject = Quiz.instance().set_quizzes(input_dictionary["quizzes"])
-            print(input_dictionary)
         except KeyError:
             return
 

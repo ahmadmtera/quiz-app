@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Authenticator:
-    ROLES = {"admin": 0, "student": 1}
+    ROLES = {"admin": 0, "student": 1, "unclassified": 2}
 
     @staticmethod
     def generate_hash_and_salt(password) -> {}:

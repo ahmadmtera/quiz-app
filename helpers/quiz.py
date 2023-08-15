@@ -1,4 +1,5 @@
 from abc import ABC
+from utils.utilities import DateAndTime
 
 
 class Quiz(ABC):
@@ -16,7 +17,7 @@ class Quiz(ABC):
 
     def add_quiz(self, quiz_name, quiz_subject, owner_name, quiz_questions):
         quiz_id = len(self.quizzes)
-        self.quizzes[quiz_id] = {"id": quiz_id, "name": quiz_name, "subject": quiz_subject, "questions": quiz_questions, "owner_name": owner_name, "date_time_added": utilities.DateAndTime.get_date_and_time()}
+        self.quizzes[quiz_id] = {"id": quiz_id, "name": quiz_name, "subject": quiz_subject, "questions": quiz_questions, "owner_name": owner_name, "date_time_added": DateAndTime.get_date_and_time()}
         return self.quizzes[quiz_id]
 
     def fetch_quiz(self, quiz_id):
