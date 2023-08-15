@@ -1,4 +1,4 @@
-/usr/bin/python3 /Users/ahmadmtera/Development/PycharmProjects/QuizApp/controller/driver.py 
+/python3 /driver.py 
 -------------------------------------
 Welcome to this Quiz Program Portal.
 Today's date & time is: 15/08/2023 & 16:04:35
