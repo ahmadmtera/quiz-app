@@ -1,0 +1,209 @@
+/usr/bin/python3 /Users/ahmadmtera/Development/PycharmProjects/QuizApp/controller/driver.py 
+-------------------------------------
+Welcome to this Quiz Program Portal.
+Today's date & time is: 15/08/2023 & 16:04:35
+--------------------------------------------------------------------------
+Please authenticate to get started.
+Available options::-
+1. Login
+2. Register
+3. Quit
+* Your choice: 1
+* Enter username: ahmadmtera
+* Enter password: 13
+Wrong credentials entered. You have 2/3 attempts left.
+* Enter password: 13
+Wrong credentials entered. You have 1/3 attempts left.
+* Enter password: 13
+Wrong credentials entered. You have 0/3 attempts left.
+Available options::-
+1. Login
+2. Register
+3. Quit
+* Your choice: 1
+* Enter username: f
+* Enter password: f
+Wrong credentials entered. You have 2/3 attempts left.
+* Enter password: f
+Wrong credentials entered. You have 1/3 attempts left.
+* Enter password: f
+Wrong credentials entered. You have 0/3 attempts left.
+Available options::-
+1. Login
+2. Register
+3. Quit
+* Your choice: 2
+Available account types:-
+1. Student
+2. Admin
+* Your choice: 2
+* Enter the secret obtained from your network admin: secret
+Create a new username & password:-
+* Enter username: ahmadmtera
+* Enter password: 
+* Enter password: 123
+Registered successfully.
+-----------------------------------------------------------------------------------------
+Welcome to the Admin portal, ahmadmtera.
+-----------------------------------------
+-------------------------
+You are in the Main Menu.
+Available options:-
+1. View all quizzes
+2. Create a quiz
+3. Save & Logout
+* Enter option: 1
+------------------------------------------------------------
+No quizzes exist in the database. To get started, a quiz has to be added.
+------------------------------------------------------------
+-------------------------
+You are in the Main Menu.
+Available options:-
+1. View all quizzes
+2. Create a quiz
+3. Save & Logout
+* Enter option: 2
+--------------------------
+Viewing add a quiz form:-
+* Quiz name: Canadian Knowledge (1)
+* Quiz subject: Geography
+-----------------------------------
+Available options for quiz (Canadian Knowledge (1)):-
+1. Add a question
+2. Finalize & Save
+3. Discard
+* Option: 1
+* Question(1) title: Where does Canada exist?
+* Question(1) choices:-
+  Note: When done adding choices, type "correct" to enter the correct answer's # and finalize the question.
+Choice (1): Northern America
+Choice (2): Southern America
+Choice (3): correct
+* Correct choice #: 1
+-----------------------------------
+Available options for quiz (Canadian Knowledge (1)):-
+1. Add a question
+2. Finalize & Save
+3. Discard
+* Option: 1
+* Question(2) title: What ocean borders Eastern Canada?
+* Question(2) choices:-
+  Note: When done adding choices, type "correct" to enter the correct answer's # and finalize the question.
+Choice (1): Pacific Ocean
+Choice (2): Atlantic Ocean
+Choice (3): None of the above
+Choice (4): correct
+* Correct choice #: 2
+-----------------------------------
+Available options for quiz (Canadian Knowledge (1)):-
+1. Add a question
+2. Finalize & Save
+3. Discard
+* Option: 2
+------------------------------------------------------------------------------------
+-------------------------
+You are in the Main Menu.
+Available options:-
+1. View all quizzes
+2. Create a quiz
+3. Save & Logout
+* Enter option: 1
+------------------------------------------------------------
+Viewing all quizzes:-
+---------------------
+- Quiz name: Canadian Knowledge (1) , ID: 0, Creator: ahmadmtera
+
+Question(1): Where does Canada exist?
+1) Northern America
+2) Southern America
+
+Question(2): What ocean borders Eastern Canada?
+1) Pacific Ocean
+2) Atlantic Ocean
+3) None of the above
+
+------------------------------------
+-------------------------
+You are in the Main Menu.
+Available options:-
+1. View all quizzes
+2. Create a quiz
+3. Save & Logout
+* Enter option: 2
+--------------------------
+Viewing add a quiz form:-
+* Quiz name: Canadian History
+* Quiz subject: History
+-----------------------------------
+Available options for quiz (Canadian History):-
+1. Add a question
+2. Finalize & Save
+3. Discard
+* Option: 2
+Quiz must have at least one question. Please add at least one question before finalizing.
+-----------------------------------
+Available options for quiz (Canadian History):-
+1. Add a question
+2. Finalize & Save
+3. Discard
+* Option: 1
+* Question(1) title: When is Canada's Independence Day?
+* Question(1) choices:-
+  Note: When done adding choices, type "correct" to enter the correct answer's # and finalize the question.
+Choice (1): 1867
+Choice (2): 1900
+Choice (3): 1950
+Choice (4): 1670
+Choice (5): correct
+* Correct choice #: 1
+-----------------------------------
+Available options for quiz (Canadian History):-
+1. Add a question
+2. Finalize & Save
+3. Discard
+* Option: 2
+------------------------------------------------------------------------------------
+-------------------------
+You are in the Main Menu.
+Available options:-
+1. View all quizzes
+2. Create a quiz
+3. Save & Logout
+* Enter option: 1
+------------------------------------------------------------
+Viewing all quizzes:-
+---------------------
+- Quiz name: Canadian Knowledge (1) , ID: 0, Creator: ahmadmtera
+
+Question(1): Where does Canada exist?
+1) Northern America
+2) Southern America
+
+Question(2): What ocean borders Eastern Canada?
+1) Pacific Ocean
+2) Atlantic Ocean
+3) None of the above
+
+------------------------------------
+- Quiz name: Canadian History , ID: 1, Creator: ahmadmtera
+
+Question(1): When is Canada's Independence Day?
+1) 1867
+2) 1900
+3) 1950
+4) 1670
+
+------------------------------------
+-------------------------
+You are in the Main Menu.
+Available options:-
+1. View all quizzes
+2. Create a quiz
+3. Save & Logout
+* Enter option: 3
+--------------
+Logging out...
+Successfully saved data to database. Goodbye.
+----------------------------------------------
+
+Process finished with exit code 0
