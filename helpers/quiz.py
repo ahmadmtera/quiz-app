@@ -1,5 +1,5 @@
 from abc import ABC
-from utils.utilities import DateAndTime
+from utils.utilities import DateAndTime, InputVerificationUtils
 
 
 class Quiz(ABC):
@@ -21,6 +21,9 @@ class Quiz(ABC):
         return self.quizzes[quiz_id]
 
     def fetch_quiz(self, quiz_id):
+        if not InputVerificationUtils.isinteger(quiz_id):
+            raise ValueError("Quiz ID must be an integer to be parsable using the fetch_quiz method inside of a Quiz object.")
+        quiz_id = int(quiz_id)
         if quiz_id in self.quizzes:
             return self.quizzes[quiz_id]
         else:
@@ -29,9 +32,11 @@ class Quiz(ABC):
     def fetch_all_quizzes(self) -> {}:
         return self.quizzes
 
-    def set_quizzes(self, quizzes):
-        self.quizzes = quizzes
-        return self
+    def parse_quizzes(self, quizzes):
+        resultant_dict = {}
+        for i in range(0, len(quizzes)):
+            resultant_dict[quizzes[i]["id"]] = quizzes[i]
+        self.quizzes = resultant_dict
 
-    def get_quizzes(self):
-        return self.quizzes
+    def __dict__(self):
+        return list(self.quizzes.values())

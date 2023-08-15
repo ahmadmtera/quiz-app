@@ -23,14 +23,16 @@ class Database:
         return cls._instance
 
     def load_from_file(self):
+        self.userObject = User.instance()
+        self.quizObject = Quiz.instance()
         import os
         if not os.path.exists(constants.DB_LOCATION_ON_DISK):
             return
         try:
             input_file = open(constants.DB_LOCATION_ON_DISK, 'r')
             input_dictionary = json.load(input_file)
-            self.userObject = User.instance().set_users(input_dictionary["users"])
-            self.quizObject = Quiz.instance().set_quizzes(input_dictionary["quizzes"])
+            self.userObject.parse_users(input_dictionary["users"])
+            self.quizObject.parse_quizzes(input_dictionary["quizzes"])
         except KeyError:
             return
 
@@ -40,7 +42,7 @@ class Database:
             output_file.write(output_json)
 
     def __dict__(self) -> {}:
-        return {"users": self.userObject.get_users(), "quizzes": self.quizObject.get_quizzes()}
+        return {"users": self.userObject.__dict__(), "quizzes": self.quizObject.__dict__()}
 
     def get_user_object(self):
         return self.userObject

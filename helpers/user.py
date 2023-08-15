@@ -1,5 +1,4 @@
 from abc import ABC
-
 from security.authentication import Authenticator
 
 
@@ -28,9 +27,11 @@ class User(ABC):
         if Authenticator.authenticate(user_password, user["auth_cred"]["password"]):
             return user
 
-    def set_users(self, users):
-        self.users = users
-        return self
+    def parse_users(self, users):
+        resultant_dict = {}
+        for i in range(0, len(users)):
+            resultant_dict[users[i]["auth_cred"]["name"]] = users[i]
+        self.users = resultant_dict
 
-    def get_users(self):
-        return self.users
+    def __dict__(self):
+        return list(self.users.values())

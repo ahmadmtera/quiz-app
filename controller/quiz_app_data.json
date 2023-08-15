@@ -1,81 +1,71 @@
 {
-  "users": {
-    "ahmadmtera": {
+  "users": [
+    {
       "auth_cred": {
         "name": "ahmadmtera",
         "password": {
-          "hash": "$2b$12$xwSzEiae3xOWsa84.7iPnuH7DMxsXM3t7eeTg0EYwUooShJl1W8YS",
-          "salt": "$2b$12$xwSzEiae3xOWsa84.7iPnu"
+          "hash": "$2b$12$w25h8iq73FLzi5qSNgL9MOV42x9RkutmkRPOBr.7Rza1MwpLUCuBC",
+          "salt": "$2b$12$w25h8iq73FLzi5qSNgL9MO"
         },
         "role": 0
       }
     },
-    "someone": {
+    {
       "auth_cred": {
-        "name": "someone",
+        "name": "johnadams",
         "password": {
-          "hash": "$2b$12$R1gdvELmfWE6aFIrY.jdkeeN5QDywXzFhzEYmhbnvgIHrelbXHHzm",
-          "salt": "$2b$12$R1gdvELmfWE6aFIrY.jdke"
+          "hash": "$2b$12$Mhdflc7KHtJQiyYyfPoKQeXVpEfc82zK/u/YVFEWfs6W3dMHb.Xna",
+          "salt": "$2b$12$Mhdflc7KHtJQiyYyfPoKQe"
         },
         "role": 1
       }
-    },
-    "tester": {
-      "auth_cred": {
-        "name": "tester",
-        "password": {
-          "hash": "$2b$12$C.BEnwPak3QM9P/minBAxeWcoS0HRZYSk0cmvbI4YvquGppboRf46",
-          "salt": "$2b$12$C.BEnwPak3QM9P/minBAxe"
-        },
-        "role": 2
-      }
     }
-  },
-  "quizzes": {
-    "0": {
+  ],
+  "quizzes": [
+    {
       "id": 0,
-      "name": "w",
-      "subject": "e",
+      "name": "Canadian Knowledge (1)",
+      "subject": "Geography",
       "questions": [
         {
-          "title": "dd",
+          "title": "Where does Canada exist?",
           "choices": [
-            "d",
-            "d",
-            "correct 3"
+            "Northern America",
+            "Southern America"
           ],
-          "answer": "3"
-        }
-      ],
-      "owner_name": "ahmadmtera",
-      "date_time_added": "15/08/2023 00:11:04"
-    },
-    "1": {
-      "id": 1,
-      "name": "Q2",
-      "subject": "S2",
-      "questions": [
-        {
-          "title": "Q1",
-          "choices": [
-            "weaf",
-            "awef",
-            "aef"
-          ],
-          "answer": 2
+          "answer": 0
         },
         {
-          "title": "eawf",
+          "title": "What ocean borders Eastern Canada?",
           "choices": [
-            "wafe",
-            "add",
-            "dfa"
+            "Pacific Ocean",
+            "Atlantic Ocean",
+            "None of the above"
           ],
-          "answer": 2
+          "answer": 1
         }
       ],
       "owner_name": "ahmadmtera",
-      "date_time_added": "15/08/2023 00:13:39"
+      "date_time_added": "15/08/2023 16:07:56"
+    },
+    {
+      "id": 1,
+      "name": "Canadian History",
+      "subject": "History",
+      "questions": [
+        {
+          "title": "When is Canada's Independence Day?",
+          "choices": [
+            "1867",
+            "1900",
+            "1950",
+            "1670"
+          ],
+          "answer": 0
+        }
+      ],
+      "owner_name": "ahmadmtera",
+      "date_time_added": "15/08/2023 16:09:08"
     }
-  }
+  ]
 }

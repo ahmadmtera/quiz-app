@@ -31,7 +31,7 @@ def authenticate(database):
                         break
                 if account_type == '1':
                     role = Authenticator.ROLES["student"]
-                if account_type == '2':
+                elif account_type == '2':
                     while True:
                         secret = input("* Enter the secret obtained from your network admin: ")
                         if secret != os.getenv('QUIZ_APP_ADMIN_SECRET'):
@@ -114,7 +114,7 @@ def enter_admin_portal(database, current_user):
 
 def print_quiz(quiz):
     print("--------------------------------------------")
-    print("Viewing quiz with ID (" + str(quiz["id"]) + "):-")
+    print("Taking quiz with ID (" + str(quiz["id"]) + "):-")
     print("--------------------------------------------")
     print("- Quiz name: " + quiz["name"], ", ID: " + str(quiz["id"]) + ", Creator: " + quiz["owner_name"] + "\n")
     question_number = 1
@@ -130,11 +130,11 @@ def print_quiz(quiz):
         if not InputVerificationUtils.isinteger(question["answer"]):
             print("There was an error reading the correct answer for this question (" + question["title"] + ") from the database. Please contact your data provider for a fix.")
         else:
-            correct_answer = int(question["answer"]) - 1
-            if answer == correct_answer:
-                print("Correct! The answer is (" + question["choices"][correct_answer] + ").")
+            correct_answer = int(question["answer"]) + 1
+            if answer == str(correct_answer):
+                print("Correct! The answer is (" + question["choices"][correct_answer - 1] + ").")
             else:
-                print("Incorrect! The answer is (" + question["choices"][correct_answer] + ").")
+                print("Incorrect! The answer is (" + question["choices"][correct_answer - 11] + ").")
         print("------------------------------------")
 
 
@@ -168,11 +168,11 @@ def enter_student_portal(database, current_user):
         print("You are in the Main Menu.")
         print("Available options:-\n1. View all quizzes\n2. Take a quiz using quiz ID\n3. Save & Logout")
         option = input("* Enter option: ")
-        if option == "view":
+        if option == "1":
             print_quizzes_list(database)
-        elif option == "take":
+        elif option == "2":
             print_take_quiz_form(database)
-        elif option == "logout":
+        elif option == "3":
             print("--------------")
             print("Logging out...")
             database.save_to_file()
