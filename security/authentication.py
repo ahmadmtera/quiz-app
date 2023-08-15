@@ -1,5 +1,3 @@
-import codecs
-
 import bcrypt  # Salted password hashing technique
 from dataclasses import dataclass
 

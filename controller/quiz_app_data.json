@@ -9,6 +9,16 @@
         },
         "role": 0
       }
+    },
+    "someone": {
+      "auth_cred": {
+        "name": "someone",
+        "password": {
+          "hash": "$2b$12$R1gdvELmfWE6aFIrY.jdkeeN5QDywXzFhzEYmhbnvgIHrelbXHHzm",
+          "salt": "$2b$12$R1gdvELmfWE6aFIrY.jdke"
+        },
+        "role": 1
+      }
     }
   },
   "quizzes": {
@@ -24,7 +34,7 @@
             "d",
             "correct 3"
           ],
-          "correct_choice": "3"
+          "answer": "3"
         }
       ],
       "owner_name": "ahmadmtera",
@@ -42,7 +52,7 @@
             "awef",
             "aef"
           ],
-          "correct_choice": "3"
+          "answer": 2
         },
         {
           "title": "eawf",
@@ -51,7 +61,7 @@
             "add",
             "dfa"
           ],
-          "correct_choice": "1"
+          "answer": 2
         }
       ],
       "owner_name": "ahmadmtera",
