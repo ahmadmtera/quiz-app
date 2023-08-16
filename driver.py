@@ -1,4 +1,6 @@
 import os
+
+import constants
 from utils.utilities import InputVerificationUtils
 from security.authentication import Authenticator
 from models.database import Database
@@ -57,6 +59,7 @@ def authenticate(database):
                     if len(user_password) > 0:
                         break
                 current_user = database.get_user_object().add_user(user_name, user_password, role)
+                database.save_to_file()
                 print("Registered successfully.")
                 return current_user
             elif choice.lower() == '1':
@@ -94,7 +97,7 @@ def enter_admin_portal(database, current_user):
     while True:
         print("-------------------------")
         print("You are in the Main Menu.")
-        print("Available options:-\n1. View all quizzes\n2. Create a quiz\n3. Save & Logout")
+        print("Available options:-\n1. View all quizzes\n2. Create a quiz\n3. Logout")
         option = input("* Enter option: ")
         if option == '1':
             print_quizzes_list(database)
@@ -134,7 +137,7 @@ def print_quiz(quiz):
             if answer == str(correct_answer):
                 print("Correct! The answer is (" + question["choices"][correct_answer - 1] + ").")
             else:
-                print("Incorrect! The answer is (" + question["choices"][correct_answer - 11] + ").")
+                print("Incorrect! The answer is (" + question["choices"][correct_answer - 1] + ").")
         print("------------------------------------")
 
 
@@ -145,8 +148,8 @@ def print_take_quiz_form(database):
         print("No quizzes exist in the database. To get started, a quiz has to be added.")
         print("------------------------------------------------------------")
         return
-    print("Tip: type \"main menu\" to go to the main menu.")
     while True:
+        print("Tip: type \"main menu\" to go to the main menu.")
         quiz_id = input("* Quiz ID: ")
         if len(quiz_id) == 0:
             continue
@@ -166,7 +169,7 @@ def enter_student_portal(database, current_user):
     print("-----------------------------------------")
     while True:
         print("You are in the Main Menu.")
-        print("Available options:-\n1. View all quizzes\n2. Take a quiz using quiz ID\n3. Save & Logout")
+        print("Available options:-\n1. View all quizzes\n2. Take a quiz using quiz ID\n3. Logout")
         option = input("* Enter option: ")
         if option == "1":
             print_quizzes_list(database)
@@ -263,6 +266,8 @@ def print_add_quiz_form(database, current_user):
                     continue
                 else:
                     database.get_quiz_object().add_quiz(quiz_name, quiz_subject, current_user["auth_cred"]["name"], quiz_questions)
+                    database.save_to_file()
+                    print("Quiz added successfully.")
                     print("------------------------------------------------------------------------------------")
                     return
             elif option == '3':
@@ -280,8 +285,22 @@ def enter_unclassified_portal(database):
     exit(0)
 
 
+def load_env_variables():
+    import os
+    try:
+        env_file = open(constants.ENV_FILE_LOCATION, 'r')
+        lines = env_file.readlines()
+        for line in lines:
+            key_value = line.split('=')
+            print(key_value)
+            os.environ[key_value[0]] = key_value[1]
+    except FileNotFoundError:
+        return
+
+
 def main():
     print_welcome_prompt()
+    load_env_variables()
     database = create_database_instance()
     database.load_from_file()
     current_user = authenticate(database)

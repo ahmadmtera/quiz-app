@@ -31,8 +31,9 @@ class Database:
         try:
             input_file = open(constants.DB_LOCATION_ON_DISK, 'r')
             input_dictionary = json.load(input_file)
-            self.userObject.parse_users(input_dictionary["users"])
-            self.quizObject.parse_quizzes(input_dictionary["quizzes"])
+            self.userObject.dict_from_list(input_dictionary["users"])
+            self.quizObject.dict_from_list(input_dictionary["quizzes"])
+            input_file.close()
         except KeyError:
             return
 

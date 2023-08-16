@@ -32,7 +32,7 @@ class Quiz(ABC):
     def fetch_all_quizzes(self) -> {}:
         return self.quizzes
 
-    def parse_quizzes(self, quizzes):
+    def dict_from_list(self, quizzes):
         resultant_dict = {}
         for i in range(0, len(quizzes)):
             resultant_dict[quizzes[i]["id"]] = quizzes[i]
