@@ -27,7 +27,7 @@ class User(ABC):
         if Authenticator.authenticate(user_password, user["auth_cred"]["password"]):
             return user
 
-    def parse_users(self, users):
+    def dict_from_list(self, users):
         resultant_dict = {}
         for i in range(0, len(users)):
             resultant_dict[users[i]["auth_cred"]["name"]] = users[i]
