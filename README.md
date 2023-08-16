@@ -26,7 +26,6 @@ A simple quiz system.
   * Design pattern usage:-
     * **Singleton** pattern for the Database component, ensuring that there’s either zero or one single instance of the database at any given time, which ensures data protection against corruption
     * **MVC** pattern
-  * Note when running the source code via an IDE:-
-    * Before deploying the app, set the environment variable for the admin secret with the name QUIZ_APP_ADMIN_SECRET inside the .env file
+  * Note: Before deploying the app, set the environment variable for the admin secret with the name QUIZ_APP_ADMIN_SECRET inside the .env file
 
 **Enjoy!**

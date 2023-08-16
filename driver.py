@@ -1,17 +1,16 @@
 import os
 
-import constants
+import utils.utilities
+from utils import constants, definitions
 from utils.utilities import InputVerificationUtils
-from security.authentication import Authenticator
 from models.database import Database
-from datetime import datetime
 
 
 def print_welcome_prompt():
-    print("-------------------------------------")
+    print("-" * 37)
     print("Welcome to this Quiz Program Portal.")
-    print("Today's date & time is: " + datetime.now().strftime("%d/%m/%Y") + " & " + datetime.now().strftime("%H:%M:%S"))
-    print("--------------------------------------------------------------------------")
+    print("Today's date & time is: " + utils.utilities.DateAndTime.get_date_and_time())
+    print("-" * 74)
 
 
 def create_database_instance():
@@ -19,106 +18,103 @@ def create_database_instance():
 
 
 def authenticate(database):
+    print("Please authenticate to get started.")
     while True:
-        print("Please authenticate to get started.")
-        while True:
-            print("Available options::-\n1. Login\n2. Register\n3. Quit")
-            choice = input("* Your choice: ")
-            if choice.lower() == '2':
-                attempts = 3
+        print("Available options::-\n" + str(definitions.LoginMenuItems.LOGIN.value) + ". Login\n" + str(definitions.LoginMenuItems.REGISTER.value) + ". Register\n" + str(definitions.LoginMenuItems.QUIT.value) + ". Quit")
+        choice = input("* Your choice: ")
+        if choice.lower() == str(definitions.LoginMenuItems.REGISTER.value):
+            attempts = 3
+            while True:
+                print("Available account types:-\n" + str(definitions.Roles.ADMIN.value) + ". Admin\n" + str(definitions.Roles.STUDENT.value) + ". Student")
+                account_type = input("* Your choice: ")
+                if len(account_type) > 0:
+                    break
+            role = definitions.Roles.UNCLASSIFIED.value
+            if account_type == str(definitions.Roles.STUDENT.value):
+                role = definitions.Roles.STUDENT.value
+            elif account_type == str(definitions.Roles.ADMIN.value):
                 while True:
-                    print("Available account types:-\n1. Student\n2. Admin")
-                    account_type = input("* Your choice: ")
-                    if len(account_type) > 0:
-                        break
-                if account_type == '1':
-                    role = Authenticator.ROLES["student"]
-                elif account_type == '2':
-                    while True:
-                        secret = input("* Enter the secret obtained from your network admin: ")
-                        if secret != os.getenv('QUIZ_APP_ADMIN_SECRET'):
-                            attempts -= 1
-                            print("Wrong secret entered. You have " + str(attempts) + "/3 attempts left.")
-                            if attempts == 0:
-                                print("You ran out of attempts. Proceed to create a regular account and contact your network admin to be promoted later.")
-                                role = Authenticator.ROLES["unclassified"]
-                                break
-                            continue
-                        else:
-                            role = Authenticator.ROLES["admin"]
+                    secret = input("* Enter the secret obtained from your network admin: ")
+                    if secret != os.getenv('QUIZ_APP_ADMIN_SECRET'):
+                        attempts -= 1
+                        print("Wrong secret entered. You have " + str(attempts) + "/3 attempts left.")
+                        if attempts == 0:
+                            print("You ran out of attempts. Proceed to create a regular account and contact your network admin to be promoted later.")
                             break
-                else:
-                    role = Authenticator.ROLES["unclassified"]
-                print("Create a new username & password:-")
-                while True:
-                    user_name = input("* Enter username: ")
-                    if len(user_name) > 0:
-                        break
-                while True:
-                    user_password = input("* Enter password: ")
-                    if len(user_password) > 0:
-                        break
-                current_user = database.get_user_object().add_user(user_name, user_password, role)
-                database.save_to_file()
-                print("Registered successfully.")
-                return current_user
-            elif choice.lower() == '1':
-                attempts = 3
-                while True:
-                    user_name = input("* Enter username: ")
-                    if len(user_name) > 0:
-                        break
-                while True:
-                    user_password = input("* Enter password: ")
-                    if len(user_password) == 0:
                         continue
                     else:
-                        current_user = database.get_user_object().fetch_user(user_name, user_password)
-                        if current_user is None:
-                            attempts -= 1
-                            print("Wrong credentials entered. You have " + str(attempts) + "/3 attempts left.")
-                            if attempts == 0:
-                                break
-                            continue
-                        else:
-                            print("Logged in successfully.")
-                            return current_user
-            elif choice.lower() == '3':
-                print("No changes made. Quitting...")
-                exit(0)
-            else:
-                print("Invalid option (" + choice + "). Tip: enter 3 to quit.")
+                        role = definitions.Roles.ADMIN.value
+                        break
+            print("Create a new username & password:-")
+            while True:
+                user_name = input("* Enter username: ")
+                if len(user_name) > 0:
+                    break
+            while True:
+                user_password = input("* Enter password: ")
+                if len(user_password) > 0:
+                    break
+            current_user = database.get_user_object().add_user(user_name, user_password, role)
+            database.save_to_file()
+            print("Registered successfully.")
+            return current_user
+        elif choice.lower() == str(definitions.LoginMenuItems.LOGIN.value):
+            attempts = 3
+            while True:
+                user_name = input("* Enter username: ")
+                if len(user_name) > 0:
+                    break
+            while True:
+                user_password = input("* Enter password: ")
+                if len(user_password) == 0:
+                    continue
+                else:
+                    current_user = database.get_user_object().fetch_user(user_name, user_password)
+                    if current_user is None:
+                        attempts -= 1
+                        print("Wrong credentials entered. You have " + str(attempts) + "/3 attempts left.")
+                        if attempts == 0:
+                            break
+                        continue
+                    else:
+                        print("Logged in successfully.")
+                        return current_user
+        elif choice.lower() == str(definitions.LoginMenuItems.QUIT.value):
+            print("No changes made. Quitting...")
+            exit(0)
+        else:
+            print("Invalid option (" + choice + "). Tip: enter " + str(definitions.LoginMenuItems.QUIT.value) + " to quit.")
 
 
 def enter_admin_portal(database, current_user):
-    print("-----------------------------------------------------------------------------------------")
+    print("-" * 89)
     print("Welcome to the Admin portal, " + current_user["auth_cred"]["name"] + '.')
-    print("-----------------------------------------")
+    print("-" * 41)
     while True:
-        print("-------------------------")
+        print("-" * 25)
         print("You are in the Main Menu.")
-        print("Available options:-\n1. View all quizzes\n2. Create a quiz\n3. Logout")
+        print("Available options:-\n" + str(definitions.AdminMainMenuItems.VIEW_ALL_QUIZZES.value) + ". View all quizzes\n" + str(definitions.AdminMainMenuItems.CREATE_QUIZ.value) + ". Create a quiz\n" + str(definitions.AdminMainMenuItems.LOGOUT.value) + ". Logout")
         option = input("* Enter option: ")
-        if option == '1':
+        if option == str(definitions.AdminMainMenuItems.VIEW_ALL_QUIZZES.value):
             print_quizzes_list(database)
-        elif option == '2':
+        elif option == str(definitions.AdminMainMenuItems.CREATE_QUIZ.value):
             print_add_quiz_form(database, current_user)
-        elif option == '3':
-            print("--------------")
+        elif option == str(definitions.AdminMainMenuItems.LOGOUT.value):
+            print("-" * 14)
             print("Logging out...")
             database.save_to_file()
             print("Successfully saved data to database. Goodbye.")
-            print("----------------------------------------------")
+            print("-" * 46)
             break
         else:
-            print("Invalid option (" + option + "). Tip: Type \"logout\" to quit.")
+            print("Invalid option (" + option + "). Tip: Type " + str(definitions.AdminMainMenuItems.LOGOUT.value) + " to quit.")
             continue
 
 
 def print_quiz(quiz):
-    print("--------------------------------------------")
+    print("-" * 44)
     print("Taking quiz with ID (" + str(quiz["id"]) + "):-")
-    print("--------------------------------------------")
+    print("-" * 44)
     print("- Quiz name: " + quiz["name"], ", ID: " + str(quiz["id"]) + ", Creator: " + quiz["owner_name"] + "\n")
     question_number = 1
     for question in quiz["questions"]:
@@ -138,15 +134,15 @@ def print_quiz(quiz):
                 print("Correct! The answer is (" + question["choices"][correct_answer - 1] + ").")
             else:
                 print("Incorrect! The answer is (" + question["choices"][correct_answer - 1] + ").")
-        print("------------------------------------")
+        print("-" * 36)
 
 
 def print_take_quiz_form(database):
     quizzes = database.get_quiz_object().fetch_all_quizzes()
-    print("------------------------------------------------------------")
+    print("-" * 60)
     if len(quizzes) == 0:
         print("No quizzes exist in the database. To get started, a quiz has to be added.")
-        print("------------------------------------------------------------")
+        print("-" * 60)
         return
     while True:
         print("Tip: type \"main menu\" to go to the main menu.")
@@ -164,38 +160,38 @@ def print_take_quiz_form(database):
 
 
 def enter_student_portal(database, current_user):
-    print("-----------------------------------------------------------------------------------------")
+    print("-" * 89)
     print("Welcome to the Student portal, " + current_user["auth_cred"]["name"] + '.')
-    print("-----------------------------------------")
+    print("-" * 41)
     while True:
         print("You are in the Main Menu.")
-        print("Available options:-\n1. View all quizzes\n2. Take a quiz using quiz ID\n3. Logout")
+        print("Available options:-\n" + str(definitions.StudentMainMenuItems.VIEW_ALL_QUIZZES.value) + ". View all quizzes\n" + str(definitions.StudentMainMenuItems.TAKE_QUIZ.value) + ". Take a quiz using quiz ID\n" + str(definitions.StudentMainMenuItems.LOGOUT.value) + ". Logout")
         option = input("* Enter option: ")
-        if option == "1":
+        if option == str(definitions.StudentMainMenuItems.VIEW_ALL_QUIZZES.value):
             print_quizzes_list(database)
-        elif option == "2":
+        elif option == str(definitions.StudentMainMenuItems.TAKE_QUIZ.value):
             print_take_quiz_form(database)
-        elif option == "3":
-            print("--------------")
+        elif option == str(definitions.StudentMainMenuItems.LOGOUT.value):
+            print("-" * 14)
             print("Logging out...")
             database.save_to_file()
             print("Successfully saved data to database. Goodbye.")
-            print("----------------------------------------------")
+            print("-" * 46)
             break
         else:
-            print("Invalid option (" + option + "). Tip: Type \"logout\" to quit.")
+            print("Invalid option (" + option + "). Tip: Type " + str(definitions.StudentMainMenuItems.LOGOUT.value) + " to quit.")
             continue
 
 
 def print_quizzes_list(database):
     quizzes = database.get_quiz_object().fetch_all_quizzes()
-    print("------------------------------------------------------------")
+    print("-" * 60)
     if len(quizzes) == 0:
         print("No quizzes exist in the database. To get started, a quiz has to be added.")
-        print("------------------------------------------------------------")
+        print("-" * 60)
         return
     print("Viewing all quizzes:-")
-    print("---------------------")
+    print("-" * 21)
     for quiz in quizzes.values():
         print("- Quiz name: " + quiz["name"], ", ID: " + str(quiz["id"]) + ", Creator: " + quiz["owner_name"] + "\n")
         question_number = 1
@@ -207,12 +203,12 @@ def print_quizzes_list(database):
                 print(str(choice_number) + ") " + choice)
                 choice_number += 1
             print()
-        print("------------------------------------")
+        print("-" * 36)
 
 
 def print_add_quiz_form(database, current_user):
     while True:
-        print("--------------------------")
+        print("-" * 26)
         print("Viewing add a quiz form:-")
         while True:
             quiz_name = input("* Quiz name: ")
@@ -225,13 +221,13 @@ def print_add_quiz_form(database, current_user):
         question_number = 1
         quiz_questions = []
         while True:
-            print("-----------------------------------")
-            print("Available options for quiz (" + quiz_name + "):-\n1. Add a question\n2. Finalize & Save\n3. Discard")
+            print("-" * 35)
+            print("Available options for quiz (" + quiz_name + "):-\n" + str(definitions.AddQuizMenuItems.ADD_QUESTION.value) + ". Add a question\n" + str(definitions.AddQuizMenuItems.FINALIZE_AND_SAVE.value) + ". Finalize & Save\n" + str(definitions.AddQuizMenuItems.DISCARD.value) + ". Discard")
             option = input("* Option: ")
-            if option == '1':
+            if option == str(definitions.AddQuizMenuItems.ADD_QUESTION.value):
                 quiz_question_choices = []
                 while True:
-                    quiz_question_title = input("* Question(" + str(question_number) + ") title: ")
+                    quiz_question_title = input("* Question(" + str(question_number) + "): ")
                     if len(quiz_question_title) > 0:
                         break
                 choice_number = 1
@@ -260,7 +256,7 @@ def print_add_quiz_form(database, current_user):
                     else:
                         quiz_question_choices.append(choice)
                         choice_number += 1
-            elif option == '2':
+            elif option == str(definitions.AddQuizMenuItems.FINALIZE_AND_SAVE.value):
                 if question_number < 2:
                     print("Quiz must have at least one question. Please add at least one question before finalizing.")
                     continue
@@ -268,13 +264,13 @@ def print_add_quiz_form(database, current_user):
                     database.get_quiz_object().add_quiz(quiz_name, quiz_subject, current_user["auth_cred"]["name"], quiz_questions)
                     database.save_to_file()
                     print("Quiz added successfully.")
-                    print("------------------------------------------------------------------------------------")
+                    print("-" * 84)
                     return
-            elif option == '3':
+            elif option == str(definitions.AddQuizMenuItems.DISCARD.value):
                 print("Discarding current quiz...")
                 return
             else:
-                print("Invalid option (" + option + "). Tip: Type 3 to discard the form and go to the main menu.")
+                print("Invalid option (" + option + "). Tip: Type " + str(definitions.AddQuizMenuItems.DISCARD.value) + " to discard the form and go to the main menu.")
 
 
 def enter_unclassified_portal(database):
@@ -292,7 +288,6 @@ def load_env_variables():
         lines = env_file.readlines()
         for line in lines:
             key_value = line.split('=')
-            print(key_value)
             os.environ[key_value[0]] = key_value[1]
     except FileNotFoundError:
         return
@@ -304,11 +299,11 @@ def main():
     database = create_database_instance()
     database.load_from_file()
     current_user = authenticate(database)
-    if current_user["auth_cred"]["role"] == Authenticator.ROLES["admin"]:
+    if current_user["auth_cred"]["role"] == definitions.Roles.ADMIN.value:
         enter_admin_portal(database, current_user)
-    elif current_user["auth_cred"]["role"] == Authenticator.ROLES["student"]:
+    elif current_user["auth_cred"]["role"] == definitions.Roles.STUDENT.value:
         enter_student_portal(database, current_user)
-    elif current_user["auth_cred"]["role"] == Authenticator.ROLES["unclassified"]:
+    elif current_user["auth_cred"]["role"] == definitions.Roles.UNCLASSIFIED.value:
         enter_unclassified_portal(database)
 
 
