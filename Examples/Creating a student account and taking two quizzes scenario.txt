@@ -1,17 +1,22 @@
-/python3 /driver.py 
+/python3 /driver.py
 -------------------------------------
 Welcome to this Quiz Program Portal.
-Today's date & time is: 15/08/2023 & 16:28:54
+Today's date & time is: 16/08/2023 16:21:35
 --------------------------------------------------------------------------
 Please authenticate to get started.
 Available options::-
 1. Login
 2. Register
 3. Quit
-* Your choice: 1
+* Your choice: 2
+Available account types:-
+1. Admin
+2. Student
+* Your choice: 2
+Create a new username & password:-
 * Enter username: johnadams
 * Enter password: 123
-Logged in successfully.
+Registered successfully.
 -----------------------------------------------------------------------------------------
 Welcome to the Student portal, johnadams.
 -----------------------------------------
@@ -19,7 +24,7 @@ You are in the Main Menu.
 Available options:-
 1. View all quizzes
 2. Take a quiz using quiz ID
-3. Save & Logout
+3. Logout
 * Enter option: 1
 ------------------------------------------------------------
 Viewing all quizzes:-
@@ -33,7 +38,7 @@ Question(1): Where does Canada exist?
 Question(2): What ocean borders Eastern Canada?
 1) Pacific Ocean
 2) Atlantic Ocean
-3) None of the above
+3) None of the abov
 
 ------------------------------------
 - Quiz name: Canadian History , ID: 1, Creator: ahmadmtera
@@ -49,7 +54,7 @@ You are in the Main Menu.
 Available options:-
 1. View all quizzes
 2. Take a quiz using quiz ID
-3. Save & Logout
+3. Logout
 * Enter option: 2
 ------------------------------------------------------------
 Tip: type "main menu" to go to the main menu.
@@ -69,11 +74,12 @@ Correct! The answer is (Northern America).
 Question(2): What ocean borders Eastern Canada?
 1) Pacific Ocean
 2) Atlantic Ocean
-3) None of the above
+3) None of the abov
 
 * Answer: 3
 Incorrect! The answer is (Atlantic Ocean).
 ------------------------------------
+Tip: type "main menu" to go to the main menu.
 * Quiz ID: 1
 --------------------------------------------
 Taking quiz with ID (1):-
@@ -89,12 +95,13 @@ Question(1): When is Canada's Independence Day?
 * Answer: 1
 Correct! The answer is (1867).
 ------------------------------------
+Tip: type "main menu" to go to the main menu.
 * Quiz ID: main menu
 You are in the Main Menu.
 Available options:-
 1. View all quizzes
 2. Take a quiz using quiz ID
-3. Save & Logout
+3. Logout
 * Enter option: 3
 --------------
 Logging out...

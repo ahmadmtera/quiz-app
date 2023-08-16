@@ -15,23 +15,23 @@ class User(ABC):
             cls._instance = cls.__new__(cls)
         return cls._instance
 
-    def add_user(self, user_name, user_password, user_role):
+    def add_user(self, user_name: str, user_password: str, user_role: int) -> {}:
         auth_cred = {"name": user_name, "password": Authenticator.generate_hash_and_salt(user_password), "role": user_role}
         self.users[user_name] = {"auth_cred": auth_cred}
         return self.users[user_name]
 
-    def fetch_user(self, user_name, user_password):
+    def fetch_user(self, user_name: str, user_password: str) -> {}:
         if user_name not in self.users.keys():
             return None
         user = self.users[user_name]
         if Authenticator.authenticate(user_password, user["auth_cred"]["password"]):
             return user
 
-    def dict_from_list(self, users):
+    def dict_from_list(self, users: []) -> {}:
         resultant_dict = {}
-        for i in range(0, len(users)):
-            resultant_dict[users[i]["auth_cred"]["name"]] = users[i]
+        for key, value in users[0].items():
+            resultant_dict[key] = value
         self.users = resultant_dict
 
-    def __dict__(self):
-        return list(self.users.values())
+    def __dict__(self) -> {}:
+        return self.users
