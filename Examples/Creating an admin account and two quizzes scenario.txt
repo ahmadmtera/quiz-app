@@ -1,7 +1,7 @@
 /python3 /driver.py
 -------------------------------------
 Welcome to this Quiz Program Portal.
-Today's date & time is: 16/08/2023 16:16:26
+Today's date & time is: 16/08/2023 18:56:57
 --------------------------------------------------------------------------
 Please authenticate to get started.
 Available options::-
@@ -40,37 +40,37 @@ Available options:-
 * Enter option: 2
 --------------------------
 Viewing add a quiz form:-
-* Quiz name: Canadian Knowledge (1)
+* Quiz name: Canadian Knowledge
 * Quiz subject: Geography
 -----------------------------------
-Available options for quiz (Canadian Knowledge (1)):-
+Available options for quiz (Canadian Knowledge):-
 1. Add a question
 2. Finalize & Save
 3. Discard
 * Option: 1
-* Question(1) title: Where does Canada exist?
+* Question(1): Where does Canada exist?
 * Question(1) choices:-
   Note: When done adding choices, type "correct" to enter the correct answer's # and finalize the question.
-Choice (1): Northern America
-Choice (2): Southern America
+Choice (1): North America
+Choice (2): South America
 Choice (3): correct
 * Correct choice #: 1
 -----------------------------------
-Available options for quiz (Canadian Knowledge (1)):-
+Available options for quiz (Canadian Knowledge):-
 1. Add a question
 2. Finalize & Save
 3. Discard
 * Option: 1
-* Question(2) title: What ocean borders Eastern Canada?
+* Question(2): What ocean borders Eastern Canada?
 * Question(2) choices:-
   Note: When done adding choices, type "correct" to enter the correct answer's # and finalize the question.
 Choice (1): Pacific Ocean
 Choice (2): Atlantic Ocean
-Choice (3): None of the abov
+Choice (3): None of the above
 Choice (4): correct
 * Correct choice #: 2
 -----------------------------------
-Available options for quiz (Canadian Knowledge (1)):-
+Available options for quiz (Canadian Knowledge):-
 1. Add a question
 2. Finalize & Save
 3. Discard
@@ -93,8 +93,15 @@ Available options for quiz (Canadian History):-
 1. Add a question
 2. Finalize & Save
 3. Discard
+* Option: 2
+Quiz must have at least one question. Please add at least one question before finalizing.
+-----------------------------------
+Available options for quiz (Canadian History):-
+1. Add a question
+2. Finalize & Save
+3. Discard
 * Option: 1
-* Question(1) title: When is Canada's Independence Day?
+* Question(1): When is Canada's Independence Day?
 * Question(1) choices:-
   Note: When done adding choices, type "correct" to enter the correct answer's # and finalize the question.
 Choice (1): 1867
@@ -121,16 +128,16 @@ Available options:-
 ------------------------------------------------------------
 Viewing all quizzes:-
 ---------------------
-- Quiz name: Canadian Knowledge (1) , ID: 0, Creator: ahmadmtera
+- Quiz name: Canadian Knowledge , ID: 0, Creator: ahmadmtera
 
 Question(1): Where does Canada exist?
-1) Northern America
-2) Southern America
+1) North America
+2) South America
 
 Question(2): What ocean borders Eastern Canada?
 1) Pacific Ocean
 2) Atlantic Ocean
-3) None of the abov
+3) None of the above
 
 ------------------------------------
 - Quiz name: Canadian History , ID: 1, Creator: ahmadmtera

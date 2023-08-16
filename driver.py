@@ -227,7 +227,7 @@ def print_add_quiz_form(database, current_user):
             if option == str(definitions.AddQuizMenuItems.ADD_QUESTION.value):
                 quiz_question_choices = []
                 while True:
-                    quiz_question_title = input("* Question(" + str(question_number) + ") title: ")
+                    quiz_question_title = input("* Question(" + str(question_number) + "): ")
                     if len(quiz_question_title) > 0:
                         break
                 choice_number = 1

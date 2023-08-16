@@ -27,14 +27,14 @@
     {
       "0": {
         "id": 0,
-        "name": "Canadian Knowledge (1)",
+        "name": "Canadian Knowledge",
         "subject": "Geography",
         "questions": [
           {
             "title": "Where does Canada exist?",
             "choices": [
-              "Northern America",
-              "Southern America"
+              "North America",
+              "South America"
             ],
             "answer": 0
           },
@@ -43,7 +43,7 @@
             "choices": [
               "Pacific Ocean",
               "Atlantic Ocean",
-              "None of the abov"
+              "None of the above"
             ],
             "answer": 1
           }
